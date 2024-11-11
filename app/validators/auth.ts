@@ -1,0 +1,15 @@
+import vine from '@vinejs/vine'
+
+export const fullNameRule = vine.string().maxLength(255).optional()
+
+export const registerValidator = vine.compile(
+  vine.object({
+    email: vine
+      .string()
+      .email()
+      .normalizeEmail({ all_lowercase: true })
+      .isUnique({ table: 'accounts', column: 'email' })
+      .maxLength(254),
+    password: vine.string().minLength(8),
+  })
+)
