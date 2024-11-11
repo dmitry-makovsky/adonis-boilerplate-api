@@ -1,0 +1,25 @@
+services:
+  main-db:
+    image: postgres:17-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_DATABASE}
+    ports:
+      - "${DB_PORT}:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+  pgadmin4:
+    image: dcagatay/pwless-pgadmin4:8.12
+    ports:
+      - 5050:80
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_HOST: "main-db"
+      POSTGRES_PORT: ${DB_PORT}
+      POSTGRES_DB: ${DB_DATABASE}
+
+volumes:
+  db_data:
