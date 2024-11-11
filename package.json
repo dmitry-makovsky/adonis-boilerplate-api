@@ -9,7 +9,7 @@
     "build": "node ace build",
     "dev": "node ace serve --hmr",
     "test": "node ace test",
-    "test:watch": "npx nodemon -e js,ts --exec 'tsx bin/test.ts'",
+    "test:watch": "NODE_OPTIONS='--disable-warning=ExperimentalWarning' npx nodemon -e js,ts --exec 'tsx bin/test.ts'",
     "lint": "eslint .",
     "format": "prettier --write .",
     "typecheck": "tsc --noEmit"
