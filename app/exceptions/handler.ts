@@ -1,5 +1,6 @@
 import app from '@adonisjs/core/services/app'
 import { HttpContext, ExceptionHandler } from '@adonisjs/core/http'
+import { errors as authErrors } from '@adonisjs/auth'
 
 export default class HttpExceptionHandler extends ExceptionHandler {
   /**
@@ -13,6 +14,17 @@ export default class HttpExceptionHandler extends ExceptionHandler {
    * response to the client
    */
   async handle(error: unknown, ctx: HttpContext) {
+    if (error instanceof authErrors.E_UNAUTHORIZED_ACCESS) {
+      return ctx.response.unauthorized({
+        errors: [
+          {
+            code: 'unauthorized',
+            message: 'You are not authorized to access this resource',
+          },
+        ],
+      })
+    }
+
     return super.handle(error, ctx)
   }
 
