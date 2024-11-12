@@ -1,6 +1,7 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import Account from '#models/account'
 import { registerValidator, loginValidator } from '#validators/auth'
+import VerificationService from '#services/verification_service'
 
 export default class AuthController {
   public async register({ request, response }: HttpContext) {
@@ -8,6 +9,11 @@ export default class AuthController {
       const data = await request.validateUsing(registerValidator)
       const account = await Account.create(data)
       await account.refresh()
+
+      if (!account.isActivated) {
+        await VerificationService.sendVerificationEmail(account)
+      }
+
       const token = await Account.accessTokens.create(account, ['*'], {
         name: 'api_token',
         expiresIn: '30 days',

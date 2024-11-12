@@ -2,15 +2,20 @@ import { test } from '@japa/runner'
 import Account from '#models/account'
 import { testAccount, testEmail } from '#tests/__fixtures/accounts'
 import testUtils from '@adonisjs/core/services/test_utils'
+import mail from '@adonisjs/mail/services/main'
 
 test.group('Account registration', (group) => {
   group.setup(() => testUtils.db().withGlobalTransaction())
   // 1. Register a new user
-  test('Registred test account', async ({ client, route, assert }) => {
+  test('Registred test account', async ({ client, route, assert, cleanup }) => {
+    mail.fake()
     const response = await client.post(route('auth.register')).json(testAccount)
     response.assertStatus(201)
     const accountFromDb = await Account.findBy('email', testEmail)
     assert.exists(accountFromDb)
+    cleanup(() => {
+      mail.restore()
+    })
   })
   // 1.1. Try to register the same user again
   test('Account already exists', async ({ client, route }) => {
