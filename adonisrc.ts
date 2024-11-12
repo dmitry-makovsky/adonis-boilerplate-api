@@ -38,6 +38,7 @@ export default defineConfig({
     () => import('@adonisjs/auth/auth_provider'),
     () => import('@adonisjs/mail/mail_provider'),
     () => import('#providers/workers_provider'),
+    () => import('@adonisjs/core/providers/edge_provider'),
   ],
 
   /*
@@ -79,4 +80,10 @@ export default defineConfig({
     ],
     forceExit: false,
   },
+  metaFiles: [
+    {
+      pattern: 'resources/views/**/*.edge',
+      reloadServer: false,
+    },
+  ],
 })
