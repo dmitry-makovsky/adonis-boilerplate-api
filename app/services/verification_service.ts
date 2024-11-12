@@ -7,9 +7,9 @@ export default class VerificationService {
   static async sendVerificationEmail(account: Account) {
     await mail.sendLater(new VerifyEmailNotification(account))
   }
-  static makeSignedUrl(email: string, routeIdentifier: string) {
+  static makeSignedUrl(email: string) {
     return router.makeSignedUrl(
-      routeIdentifier,
+      'verification.email.verify',
       { email },
       { expiresIn: '1h', purpose: 'email_verification' }
     )

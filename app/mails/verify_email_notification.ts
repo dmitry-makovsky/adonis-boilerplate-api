@@ -13,7 +13,7 @@ export default class VerifyEmailNotification extends BaseMail {
   }
 
   #makeUrl() {
-    return `${env.get('APP_URL')}${VerificationService.makeSignedUrl(this.account.email, 'verification.email.verify')}`
+    return `${env.get('APP_URL')}${VerificationService.makeSignedUrl(this.account.email)}`
   }
 
   prepare() {
