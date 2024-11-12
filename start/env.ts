@@ -43,6 +43,7 @@ export default await Env.create(new URL('../', import.meta.url), {
   |----------------------------------------------------------
   */
   MAIL_FROM: Env.schema.string({ format: 'email' }),
+  MAIL_NAME: Env.schema.string(),
 
   /*
   |----------------------------------------------------------
