@@ -10,6 +10,20 @@ services:
       - "${DB_PORT}:5432"
     volumes:
       - db_data:/var/lib/postgresql/data
+  redis:
+    image: redis:7.2.5-alpine
+    restart: always
+    ports:
+      - "${REDIS_PORT}:6379"
+  p3x-redis-ui:
+    image: patrikx3/p3x-redis-ui:2024.10.106
+    ports:
+      - 7843:7843
+    environment:
+      REDIS_HOST: "redis"
+      REDIS_PORT: ${REDIS_PORT}
+    volumes:
+      - redis_ui_data:/settings
   pgadmin4:
     image: dcagatay/pwless-pgadmin4:8.12
     ports:
@@ -23,3 +37,4 @@ services:
 
 volumes:
   db_data:
+  redis_ui_data:
