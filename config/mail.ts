@@ -24,6 +24,10 @@ const mailConfig = defineConfig({
       }, */
     }),
   },
+  from: {
+    address: env.get('MAIL_FROM'),
+    name: env.get('MAIL_NAME'),
+  },
 })
 
 export default mailConfig
