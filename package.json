@@ -24,13 +24,15 @@
     "#events/*": "./app/events/*.js",
     "#middleware/*": "./app/middleware/*.js",
     "#validators/*": "./app/validators/*.js",
-    "#providers/*": "./providers/*.js",
+    "#providers/*": "./app/providers/*.js",
     "#policies/*": "./app/policies/*.js",
     "#abilities/*": "./app/abilities/*.js",
     "#database/*": "./database/*.js",
     "#start/*": "./start/*.js",
     "#tests/*": "./tests/*.js",
-    "#config/*": "./config/*.js"
+    "#config/*": "./config/*.js",
+    "#queues/*": "./app/queues/*.js",
+    "#workers/*": "./app/workers/*.js"
   },
   "devDependencies": {
     "@adonisjs/assembler": "^7.8.2",
@@ -61,6 +63,7 @@
     "@adonisjs/mail": "^9.2.2",
     "@vinejs/vine": "^2.1.0",
     "bullmq": "^5.25.6",
+    "ioredis": "^5.4.1",
     "luxon": "^3.5.0",
     "pg": "^8.13.1",
     "reflect-metadata": "^0.2.2"
