@@ -31,6 +31,26 @@ test.group('Account login', async (group) => {
     await Account.accessTokens.create(acc, ['*'])
   })
 
+  // 1. Try to login with bearer token
+  test('Login with bearer token', async ({ client, route }) => {
+    const response = await client.post(route('auth.login')).json({
+      email: testEmail,
+      password: testAccount.password,
+    })
+    const token = response.body().token.token
+
+    const accountResponse = await client
+      .get(route('auth.account'))
+      .header('Authorization', `Bearer ${token}`)
+
+    accountResponse.assertStatus(200)
+    accountResponse.assertBodyContains({
+      account: {
+        email: testEmail,
+      },
+    })
+  })
+
   // 2. Login with the registered user
   test('Login with test account', async ({ client, route }) => {
     const response = await client.post(route('auth.login')).json({

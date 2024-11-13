@@ -38,12 +38,12 @@ export default class AuthController {
     try {
       const data = await request.validateUsing(loginValidator)
       const account = await Account.verifyCredentials(data.email, data.password)
-      const token = Account.accessTokens.create(account)
+      const token = await Account.accessTokens.create(account)
       return response.created({
         account,
         token,
-        code: 'logout_success',
-        message: 'You have successfully logged out',
+        code: 'login_success',
+        message: 'You have successfully logged in',
       })
     } catch (error) {
       if (error.code === 'E_VALIDATION_ERROR' || error.code === 'E_INVALID_CREDENTIALS') {

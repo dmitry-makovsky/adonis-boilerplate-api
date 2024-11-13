@@ -26,7 +26,7 @@ router.get('/', async () => {
 router.post('/auth/registration', [AuthController, 'register']).as('auth.register')
 router.post('/auth/login', [AuthController, 'login']).as('auth.login')
 router.delete('/auth/logout', [AuthController, 'logout']).as('auth.logout').use(middleware.auth())
-router.get('/auth/account', [AuthController, 'account']).as('auth.account')
+router.get('/auth/account', [AuthController, 'account']).as('auth.account').use(middleware.auth())
 
 /**
  * Verification routes
