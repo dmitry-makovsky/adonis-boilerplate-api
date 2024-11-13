@@ -21,22 +21,14 @@ export default class AuthController {
       return response.created({
         account,
         token,
-        messages: [
-          {
-            code: 'account_created',
-            message: 'Account has been created',
-          },
-        ],
+        code: 'account_created',
+        message: 'Account has been created',
       })
     } catch (error) {
       if (error.code === 'E_VALIDATION_ERROR') {
         return response.badRequest({
-          errors: [
-            {
-              code: 'invalid_credentials',
-              message: 'We were unable to process your request. Please check your information.',
-            },
-          ],
+          code: 'invalid_credentials',
+          message: 'We were unable to process your request. Please check your information.',
         })
       }
       throw error
@@ -50,22 +42,14 @@ export default class AuthController {
       return response.created({
         account,
         token,
-        messages: [
-          {
-            code: 'login_success',
-            message: 'You have successfully logged in',
-          },
-        ],
+        code: 'logout_success',
+        message: 'You have successfully logged out',
       })
     } catch (error) {
       if (error.code === 'E_VALIDATION_ERROR' || error.code === 'E_INVALID_CREDENTIALS') {
         return response.badRequest({
-          errors: [
-            {
-              code: 'invalid_credentials',
-              message: 'We were unable to process your request. Please check your information.',
-            },
-          ],
+          code: 'invalid_credentials',
+          message: 'We were unable to process your request. Please check your information.',
         })
       }
       throw error
@@ -75,12 +59,8 @@ export default class AuthController {
     const account = auth.user!
     await Account.accessTokens.delete(account, account.currentAccessToken.identifier)
     return {
-      messages: [
-        {
-          code: 'logout_success',
-          message: 'You have successfully logged out',
-        },
-      ],
+      code: 'logout_success',
+      message: 'You have successfully logged out',
     }
   }
   public async account({ auth }: HttpContext) {
