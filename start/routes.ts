@@ -38,6 +38,7 @@ router
 router
   .get('/verification/email/verify/:email', [EmailVerificationsController, 'verify'])
   .as('verification.email.verify')
+  .use([middleware.session(), middleware.shield()])
 
 /**
  * Password reset routes

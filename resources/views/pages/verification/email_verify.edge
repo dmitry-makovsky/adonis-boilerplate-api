@@ -1,0 +1,16 @@
+@layout({ title: "Email Verification" })
+  <div class="container">
+    <h1>Email Verification</h1>
+
+    @if(error)
+      <div class="error">
+        <p> {{ error }} </p>
+      </div>
+    @else
+      <p class="success">
+        Your email has been verified successfully!<br>
+      </p>
+    @end
+
+  </div>
+@end

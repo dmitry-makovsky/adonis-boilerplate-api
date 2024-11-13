@@ -25,33 +25,25 @@ export default class EmailVerificationsController {
       code: 'EMAIL_VERIFICATION_LINK_SENT',
     })
   }
-  public async verify({ request, response, params }: HttpContext) {
+  public async verify({ request, view, params }: HttpContext) {
     if (!request.hasValidSignature('email_verification')) {
-      return response.badRequest({
-        message: 'Invalid or expired email verification link',
-        code: 'INVALID_EMAIL_VERIFICATION_LINK',
+      return view.render('pages/verification/email_verify', {
+        error: 'Your email verification link is either invalid or expired. Please try again.',
       })
     }
     const account = await Account.findBy('email', params.email)
     if (!account) {
-      return response.badRequest({
-        message: 'Account not found',
-        code: 'ACCOUNT_NOT_FOUND',
+      return view.render('pages/verification/email_verify', {
+        error: 'Your email verification link is either invalid or expired. Please try again.',
       })
     }
     if (account.isActivated) {
-      return response.badRequest({
-        message: 'Account is already activated',
-        code: 'ACCOUNT_ALREADY_ACTIVATED',
+      return view.render('pages/verification/email_verify', {
+        error: 'Account is already activated!',
       })
     }
-
     account.isActivated = true
     await account.save()
-
-    return response.ok({
-      message: 'Account has been activated',
-      code: 'ACCOUNT_ACTIVATED',
-    })
+    return view.render('pages/verification/email_verify')
   }
 }
