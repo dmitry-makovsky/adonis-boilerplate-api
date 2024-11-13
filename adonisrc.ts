@@ -33,12 +33,14 @@ export default defineConfig({
       environment: ['repl', 'test'],
     },
     () => import('@adonisjs/core/providers/vinejs_provider'),
+    () => import('@adonisjs/core/providers/edge_provider'),
+    () => import('@adonisjs/session/session_provider'),
     () => import('@adonisjs/cors/cors_provider'),
     () => import('@adonisjs/lucid/database_provider'),
     () => import('@adonisjs/auth/auth_provider'),
     () => import('@adonisjs/mail/mail_provider'),
     () => import('#providers/workers_provider'),
-    () => import('@adonisjs/core/providers/edge_provider'),
+    () => import('@adonisjs/shield/shield_provider'),
   ],
 
   /*
@@ -52,6 +54,7 @@ export default defineConfig({
   preloads: [
     () => import('#start/routes'),
     () => import('#start/kernel'),
+    () => import('#start/view'),
     () => import('#start/rules/exists'),
     () => import('#start/rules/unique'),
   ],

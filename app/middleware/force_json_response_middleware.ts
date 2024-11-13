@@ -8,6 +8,12 @@ import type { NextFn } from '@adonisjs/core/types/http'
  */
 export default class ForceJsonResponseMiddleware {
   async handle({ request }: HttpContext, next: NextFn) {
+    // If in this pages renders a form, we don't want to force JSON response
+    const ignoredRoutesRegexs = [/^\/recovery/]
+    if (ignoredRoutesRegexs.some((regex) => regex.test(request.url()))) {
+      return next()
+    }
+
     const headers = request.headers()
     headers.accept = 'application/json'
 
