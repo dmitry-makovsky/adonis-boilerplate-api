@@ -12,6 +12,7 @@ import { middleware } from './kernel.js'
 
 const AuthController = () => import('#controllers/auth_controller')
 const EmailVerificationsController = () => import('#controllers/email_verification_controller')
+const PasswordResetController = () => import('#controllers/auth_password_reset_controller')
 
 router.get('/', async () => {
   return {
@@ -22,7 +23,7 @@ router.get('/', async () => {
 /**
  * Auth routes
  */
-router.post('/auth/register', [AuthController, 'register']).as('auth.register')
+router.post('/auth/registration', [AuthController, 'register']).as('auth.register')
 router.post('/auth/login', [AuthController, 'login']).as('auth.login')
 router.delete('/auth/logout', [AuthController, 'logout']).as('auth.logout').use(middleware.auth())
 router.get('/auth/account', [AuthController, 'account']).as('auth.account')
@@ -37,3 +38,21 @@ router
 router
   .get('/verification/email/verify/:email', [EmailVerificationsController, 'verify'])
   .as('verification.email.verify')
+
+/**
+ * Password reset routes
+ */
+router
+  .post('/recovery/reset', [PasswordResetController, 'sendResetLink'])
+  .as('recovery.password.send-reset-link')
+
+router
+  .group(() => {
+    router
+      .get('/recovery/password/:email', [PasswordResetController, 'newPasswordForm'])
+      .as('recovery.new-password.form')
+    router
+      .post('/recovery/new-password', [PasswordResetController, 'newPasswordStore'])
+      .as('recovery.new-password.store')
+  })
+  .use([middleware.session(), middleware.shield()])

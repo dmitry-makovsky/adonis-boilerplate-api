@@ -20,3 +20,11 @@ export const loginValidator = vine.compile(
     password: vine.string(),
   })
 )
+
+export const passwordResetValidator = vine.compile(
+  vine.object({
+    token: vine.string(),
+    email: vine.string().trim().isExists({ table: 'accounts', column: 'email' }),
+    password: vine.string().minLength(8),
+  })
+)
