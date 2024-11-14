@@ -82,7 +82,10 @@ export default class AuthSocialController {
       avatarUrl: user.avatarUrl,
     })
 
-    const token = await Account.accessTokens.create(account)
+    const token = await Account.accessTokens.create(account, ['*'], {
+      name: 'api_token',
+      expiresIn: '30 days',
+    })
 
     return response.created({
       account,
