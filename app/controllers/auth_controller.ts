@@ -41,6 +41,7 @@ export default class AuthController {
       const token = await Account.accessTokens.create(account)
       return response.created({
         account,
+        socialAccount: null,
         token,
         code: 'login_success',
         message: 'You have successfully logged in',

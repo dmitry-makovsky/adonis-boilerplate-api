@@ -8,7 +8,7 @@ export default class extends BaseSchema {
       .createTable(this.tableName, (table) => {
         table.uuid('id').notNullable().unique()
         table.string('email', 254).notNullable()
-        table.string('password').notNullable()
+        table.string('password').nullable()
         table.boolean('is_activated').defaultTo(false)
 
         table.timestamp('created_at').notNullable()
