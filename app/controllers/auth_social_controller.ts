@@ -41,17 +41,13 @@ export default class AuthSocialController {
         message: 'Your email is missing from the social profile. Please provide an email address',
       })
     }
-    if (user.emailVerificationState !== 'verified') {
-      return response.badRequest({
-        code: 'social_email_unverified',
-        message:
-          'Your email address is not verified. Please verify your email address on the social platform and try again',
-      })
-    }
 
     let account = await Account.findBy('email', user.email)
     if (!account) {
-      account = await Account.create({ email: user.email })
+      account = await Account.create({
+        email: user.email,
+        isActivated: user.emailVerificationState === 'verified',
+      })
     }
 
     let socialAccount = await SocialAccount.findBy({
@@ -73,14 +69,14 @@ export default class AuthSocialController {
           avatarUrl: user.avatarUrl,
         })
         .save()
+    } else {
+      socialAccount = await account.related('socialAccounts').create({
+        providerName: params.provider,
+        providerAccountId: user.id,
+        name: user.name,
+        avatarUrl: user.avatarUrl,
+      })
     }
-
-    socialAccount = await account.related('socialAccounts').create({
-      providerName: params.provider,
-      providerAccountId: user.id,
-      name: user.name,
-      avatarUrl: user.avatarUrl,
-    })
 
     const token = await Account.accessTokens.create(account, ['*'], {
       name: 'api_token',
