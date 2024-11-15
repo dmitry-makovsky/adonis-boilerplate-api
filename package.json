@@ -67,6 +67,7 @@
     "@adonisjs/session": "^7.5.0",
     "@adonisjs/shield": "^8.1.1",
     "@vinejs/vine": "^2.1.0",
+    "adonis6_ally_yandex": "^1.0.0",
     "bullmq": "^5.25.6",
     "edge.js": "^6.2.0",
     "ioredis": "^5.4.1",
