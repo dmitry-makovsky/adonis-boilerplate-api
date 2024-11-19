@@ -64,10 +64,10 @@ router
  */
 router
   .get('/auth/:provider', [AuthSocialController, 'redirectToProvider'])
-  .where('provider', /google|yandex/)
+  .where('provider', /google|yandex|vk/)
   .as('auth.social.redirect')
 
 router
   .get('/auth/:provider/callback', [AuthSocialController, 'handleProviderCallback'])
-  .where('provider', /google|yandex/)
+  .where('provider', /google|yandex|vk/)
   .as('auth.social.callback')

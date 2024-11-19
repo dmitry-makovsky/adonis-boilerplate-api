@@ -1,5 +1,6 @@
 import env from '#start/env'
 import { defineConfig, services } from '@adonisjs/ally'
+import { VkDriverService } from 'adonis6_ally_vk'
 import { YandexDriverService } from 'adonis6_ally_yandex'
 
 const allyConfig = defineConfig({
@@ -12,6 +13,11 @@ const allyConfig = defineConfig({
     clientId: env.get('YANDEX_CLIENT_ID'),
     clientSecret: env.get('YANDEX_CLIENT_SECRET'),
     callbackUrl: `${env.get('APP_URL')}/auth/yandex/callback`,
+  }),
+  vk: VkDriverService({
+    clientId: env.get('VK_CLIENT_ID'),
+    clientSecret: env.get('VK_CLIENT_SECRET'),
+    callbackUrl: `${env.get('APP_URL')}/auth/vk/callback`,
   }),
 })
 
