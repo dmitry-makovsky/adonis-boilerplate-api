@@ -1,9 +1,9 @@
 {
-  "name": "todler",
+  "name": "adonis-boilerplate-api",
   "version": "0.0.0",
   "private": true,
   "type": "module",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "scripts": {
     "start": "node bin/server.js",
     "build": "node ace build",
